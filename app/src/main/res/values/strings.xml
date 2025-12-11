@@ -1,0 +1,10 @@
+<resources>
+    <string name="title_login">LOGIN</string>
+    <string name="hint_username">Username</string>
+    <string name="hint_password">Password</string>
+    <string name="link_forgot_password">Forgot your password</string>
+    <string name="action_login">LOGIN</string>
+    <string name="link_signup">Don\'t have an account? Sign Up</string>
+    <string name="desc_icon_user">Icono de usuario</string>
+    <string name="desc_icon_lock">Icono de candado</string>
+</resources>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_bk"
+    android:focusableInTouchMode="true"
+    tools:context=".SingupActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:layout_marginTop="30dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Here's your first step"
+            android:textColor="@color/purple_700"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:paddingVertical="16dp"
+            android:layout_marginBottom="16dp"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <EditText
+                    android:id="@+id/editSingupUsername"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="Name"
+                    android:inputType="textPersonName"
+                    android:maxLines="1"
+                    android:padding="12dp"
+                    android:autofillHints="name"
+                    android:minHeight="48dp" />
+
+                <EditText
+                    android:id="@+id/editSingupPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:hint="Password"
+                    android:maxLines="1"
+                    android:inputType="textPassword"
+                    android:padding="12dp"
+                    android:autofillHints="password"
+                    android:minHeight="48dp" />
+
+                <EditText
+                    android:id="@+id/editSingupConfirmPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:hint="Confirm Password"
+                    android:maxLines="1"
+                    android:inputType="textPassword"
+                    android:padding="12dp"
+                    android:autofillHints="password"
+                    android:minHeight="48dp" />
+
+                <Button
+                    android:id="@+id/btn_register"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Register"
+                    android:textColor="@android:color/white"
+                    android:backgroundTint="@color/purple_700"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="24dp"
+                    android:paddingVertical="12dp"/>
+
+                <TextView
+                    android:id="@+id/tv_login_link"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textColor="@color/purple_700"
+                    android:textSize="17sp"
+                    android:text="Already have an account?"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_gravity="center_horizontal"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:minHeight="48dp"/>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+</ScrollView>

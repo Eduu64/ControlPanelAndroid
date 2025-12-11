@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/login_bk"
+    android:padding="20dp"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_login"  android:textSize="40sp"
+        android:textStyle="bold"
+        android:textColor="@color/purple_700"
+        android:layout_marginTop="140dp"
+        android:layout_marginStart="20dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_person"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="@string/desc_icon_user"/>
+
+        <EditText
+        android:id="@+id/editLoginUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_username"  android:maxLines="1"
+        android:inputType="textEmailAddress" android:textColorHint="@color/black"
+        android:backgroundTint="@color/black"
+        android:autofillHints="emailAddress" android:minHeight="48dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/lock"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="@string/desc_icon_lock"/> <EditText
+        android:id="@+id/editLoginPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_password"  android:maxLines="1"
+        android:inputType="textPassword" android:textColorHint="@color/black"
+        android:backgroundTint="@color/black"
+        android:autofillHints="password" android:minHeight="48dp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/editLoginForgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/link_forgot_password" android:textColor="@color/purple_700"
+        android:layout_gravity="end"
+        android:textSize="14sp"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_marginEnd="20dp"
+        android:minHeight="48dp" android:gravity="center_vertical"
+        />
+
+    <Button
+        android:id="@+id/editLoginButtonLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/action_login" android:textColor="@color/white"
+        android:backgroundTint="@color/purple_500"
+        android:paddingVertical="14dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        />
+
+    <TextView
+        android:id="@+id/editLoginSingUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/link_signup"
+        android:textColor="@color/purple_700"
+        android:textSize="14sp"
+        android:layout_gravity="end"
+        android:layout_marginEnd="25dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:minHeight="48dp" android:gravity="center_vertical"
+        />
+
+</LinearLayout>
