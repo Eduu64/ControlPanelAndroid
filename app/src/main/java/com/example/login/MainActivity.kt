@@ -12,6 +12,9 @@ import androidx.lifecycle.lifecycleScope
 import com.example.login.network.AuthRequest
 import com.example.login.network.RetrofitClient
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class MainActivity : ComponentActivity() {
 
@@ -22,8 +25,10 @@ class MainActivity : ComponentActivity() {
     private lateinit var tvSignUp: TextView
     private lateinit var tvForgotPassword: TextView
 
-    // 2. SERVICIO DE AUTENTICACIÓN (Usando el Singleton)
+    // 2. SERVICIOS
     private val authService = RetrofitClient.authService
+    // Asegúrate de que DroneDataService sea accesible
+    private val droneDataService = DroneDataService()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,14 +69,47 @@ class MainActivity : ComponentActivity() {
 
         lifecycleScope.launch {
             try {
-                // Usamos AuthRequest y llamamos al servicio del Singleton
-                val response = authService.loginUser(AuthRequest(username, password))
+
+                val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+                val currentDateTime = sdf.format(Date())
+
+                // Paso 1: Intentar Iniciar Sesión
+                val response = authService.loginUser(AuthRequest(username, password, currentDateTime))
 
                 if (response.success) {
-                    showSuccessMessage("Inicio de sesión exitoso! Token: ${response.token}")
+
+                    // --- OBTENER Y VALIDAR EL ID DEL USUARIO (UsuarioID) ---
+                    val userId = response.UsuarioID
+                    val userEmail = response.Email
+                    val userToken = response.token
+                    val userActivo = response.activo
+                    val userFechaC = response.fechaCreacion
+                    val userUltimoL = response.ultimoInicioSesion
+
+                    if (userId == null) {
+                        showErrorMessage("Login exitoso, pero el UsuarioID es nulo. Revisa la respuesta de la API.")
+                        return@launch
+                    }
+
+                    showSuccessMessage("Inicio de sesión exitoso! Cargando drones...")
+
+                    // Paso 2: Cargar Drones del Usuario
+                    val userDrones = droneDataService.loadUserDrones(userId)
+
+                    // Paso 3: Navegar a la siguiente actividad
                     val intent = Intent(this@MainActivity, DutyActivity::class.java)
+
+                    // Pasar el ID del usuario a la siguiente actividad
+                    intent.putExtra("USER_ID", userId)
+                    intent.putExtra("USERNAME",username)
+                    intent.putExtra("EMAIL", userEmail)
+                    intent.putExtra("ACTIVO", userActivo)
+                    intent.putExtra("FECHA_CREACION", userFechaC)
+                    intent.putExtra("ULTIMO_LOGIN", userUltimoL)
+
                     startActivity(intent)
                     finish()
+
                 } else {
                     showErrorMessage("Fallo al iniciar sesión: ${response.message}")
                 }

@@ -43,8 +43,39 @@
         <activity
             android:name=".DutyActivity"
             android:exported="false"
-            android:label="Duty">
+            android:label="Duty"
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
         </activity>
+
+        <activity
+            android:name=".AccountActivity"
+            android:exported="false"
+            android:label="Account">
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
+        </activity>
+
+        <activity
+            android:name=".MyDetailsActivity"
+            android:exported="false"
+            android:label="DetailsActivity">
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
+        </activity>
+
+        <activity
+            android:name=".HelpSupportActivity"
+            android:exported="false"
+            android:label="DetailsActivity">
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
+        </activity>
+
+        <activity
+            android:name=".MyReportsActivity"
+            android:exported="false"
+            android:label="ReportsActivity">
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
+        </activity>
+
+
     </application>
 
 </manifest>

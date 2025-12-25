@@ -9,7 +9,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.lifecycle.lifecycleScope
-import com.example.login.network.AuthRequest
+// Importamos el modelo de registro que requiere el email
+import com.example.login.network.RegistrationRequest
 import com.example.login.network.RetrofitClient
 import kotlinx.coroutines.launch
 
@@ -17,6 +18,7 @@ class SingupActivity : ComponentActivity() {
 
     // Nombres de variables actualizados
     private lateinit var editSingupUsername: EditText
+    private lateinit var editSingupEmail: EditText // <-- ¡NUEVO CAMPO!
     private lateinit var editSingupPassword: EditText
     private lateinit var editSingupConfirmPassword: EditText
     private lateinit var btnRegister: Button
@@ -29,13 +31,15 @@ class SingupActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_singup)
 
-        // Enlazar vistas usando los IDs solicitados: editLoginXXX
-        editSingupUsername = findViewById(R.id.editSingupUsername) // ¡Nuevo ID!
-        editSingupPassword = findViewById(R.id.editSingupPassword) // ¡Nuevo ID!
-        editSingupConfirmPassword = findViewById(R.id.editSingupConfirmPassword) // ¡Nuevo ID!
+        // Enlazar vistas
+        editSingupUsername = findViewById(R.id.editSingupUsername)
+        // 1. Enlazar el nuevo campo Email (debes asegurar que este ID existe en activity_singup.xml)
+        editSingupEmail = findViewById(R.id.editSingupEmail)
+        editSingupPassword = findViewById(R.id.editSingupPassword)
+        editSingupConfirmPassword = findViewById(R.id.editSingupConfirmPassword)
 
-        btnRegister = findViewById(R.id.btn_register) // ID consistente
-        tvLoginLink = findViewById(R.id.tv_login_link) // ID consistente
+        btnRegister = findViewById(R.id.btn_register)
+        tvLoginLink = findViewById(R.id.tv_login_link)
 
         // Lógica del Botón de Registro
         btnRegister.setOnClickListener {
@@ -49,23 +53,24 @@ class SingupActivity : ComponentActivity() {
     }
 
     /**
-     * Extrae las credenciales, valida las contraseñas y ejecuta la llamada de registro.
+     * Extrae las credenciales, valida y ejecuta la llamada de registro.
      */
     private fun attemptRegister() {
         val username = editSingupUsername.text.toString().trim()
+        val email = editSingupEmail.text.toString().trim() // <-- ¡OBTENEMOS EL EMAIL!
         val password = editSingupPassword.text.toString()
         val confirmPassword = editSingupConfirmPassword.text.toString()
 
         // 1. Validación de Campos Vacíos
-        if (username.isBlank() || password.isBlank() || confirmPassword.isBlank()) {
-            Toast.makeText(this, "Por favor, completa todos los campos.", Toast.LENGTH_SHORT).show()
+        // Se añade 'email.isBlank()' a la validación
+        if (username.isBlank() || email.isBlank() || password.isBlank() || confirmPassword.isBlank()) {
+            Toast.makeText(this, "Por favor, completa todos los campos, incluyendo el email.", Toast.LENGTH_SHORT).show()
             return
         }
 
-        // 2. Validación de Coincidencia de Contraseñas (NUEVO)
+        // 2. Validación de Coincidencia de Contraseñas
         if (password != confirmPassword) {
             showErrorMessage("Las contraseñas no coinciden. Inténtalo de nuevo.")
-            // Limpiamos solo el campo de confirmación para que el usuario pueda corregir.
             editSingupConfirmPassword.setText("")
             return
         }
@@ -73,8 +78,13 @@ class SingupActivity : ComponentActivity() {
         // 3. Envío al Servidor
         lifecycleScope.launch {
             try {
-                // Usamos la contraseña principal (password), no la de confirmación
-                val request = AuthRequest(username, password)
+                // *** ¡CAMBIO CRUCIAL! ***
+                // Usamos RegistrationRequest, que requiere username, email y contrasena
+                val request = RegistrationRequest(
+                    nombreUsuario = username,
+                    email = email,
+                    contrasena = password
+                )
 
                 val response = authService.registerUser(request)
 
@@ -94,9 +104,6 @@ class SingupActivity : ComponentActivity() {
     // --- FUNCIONES DE UTILIDAD (Sin cambios) ---
 
     private fun navigateToLogin() {
-        val intent = Intent(this, MainActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(intent)
         finish()
     }
 

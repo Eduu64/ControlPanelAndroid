@@ -76,6 +76,7 @@ dependencies {
     // Convertidor JSON (para mapear objetos Kotlin)
     implementation("com.squareup.retrofit2:converter-gson:3.0.0")
 
+    implementation("androidx.preference:preference-ktx:1.2.1")
 
 
 

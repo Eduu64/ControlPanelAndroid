@@ -7,4 +7,41 @@
     <string name="link_signup">Don\'t have an account? Sign Up</string>
     <string name="desc_icon_user">Icono de usuario</string>
     <string name="desc_icon_lock">Icono de candado</string>
+
+    <string name="title_my_account">My account</string>
+    <string name="option_my_details_title">My details</string>
+    <string name="option_my_details_subtitle">Are you referring to your name</string>
+    <string name="option_my_reports_title">My reports</string>
+    <string name="option_my_drones_subtitle">manage your AI model detections</string>
+    <string name="option_my_notifications_title">My notifications</string>
+    <string name="option_my_notifications_subtitle">Manage alerts and push notifications</string>
+    <string name="option_help_support_title">Help and support</string>
+    <string name="option_help_support_subtitle">Let me know, and I\'ll be happy to assist you.</string>
+    <string name="option_log_out_title">Log out</string>
+    <string name="option_log_out_subtitle">Securely sign out of your account</string>
+
+    <string name="cd_static_map_background">Fondo de mapa estático</string>
+    <string name="cd_profile_picture">Foto de perfil</string>
+    <string name="cd_details_icon">Icono de detalles</string>
+    <string name="cd_drones_icon">Icono de drones</string>
+    <string name="cd_notifications_icon">Icono de notificaciones</string>
+    <string name="cd_help_icon">Icono de ayuda y soporte</string>
+    <string name="cd_logout_icon">Icono de cerrar sesión</string>
+    <string name="cd_arrow_forward">Flecha de avance</string>
+
+    <string name="my_profile">My Profile</string>
+    <string name="edit">Edit</string>
+    <string name="username">Username</string>
+    <string name="email_address">Email Address</string>
+    <string name="account_details">Account Details</string>
+    <string name="account_status">Account Status</string>
+    <string name="member_since">Member Since</string>
+    <string name="last_login">Last Login</string>
+    <string name="security">Security</string>
+    <string name="security_note">Keep your account secure by updating your password regularly.</string>
+    <string name="change_password">Change Password</string>
+    <string name="user_name_default">Paquito</string>
+    <string name="user_email_default">paquito@example.com</string>
+    <string name="go_back">Go back</string>
+
 </resources>

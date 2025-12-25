@@ -1,120 +1,93 @@
 package com.example.login
 
-import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
-import androidx.activity.ComponentActivity
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-// Importamos las clases de la capa de red separada
-import com.example.login.network.AuthRequest
+import com.example.login.network.EmailVerify
 import com.example.login.network.RetrofitClient
 import kotlinx.coroutines.launch
 
-class ForgotpassActivity : ComponentActivity() {
+class ForgotpassActivity : AppCompatActivity() {
 
-    // Declaración de las vistas
-    private lateinit var etForgotUsername: EditText
-    private lateinit var etNewPassword: EditText
-    private lateinit var etConfirmNewPassword: EditText
-    private lateinit var btnResetPassword: Button
+    // --- 1. Referencias a las Vistas ---
+    private lateinit var etForgotEmail: EditText
+    private lateinit var btnVerify: Button
+    private lateinit var tvStatusMessage: TextView
     private lateinit var tvBackToLogin: TextView
 
-    // Servicio de Autenticación (Usando el objeto Singleton de Retrofit)
+    // Servicio de Red
     private val authService = RetrofitClient.authService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_forgotpass)
 
-        // 1. Inicialización de Vistas
-        etForgotUsername = findViewById(R.id.et_forgotUsername)
-        etNewPassword = findViewById(R.id.et_newPassword)
-        etConfirmNewPassword = findViewById(R.id.et_confirmNewPassword)
-        btnResetPassword = findViewById(R.id.btnResetPassword)
-        tvBackToLogin = findViewById(R.id.tv_backToLogin)
-
-        // 2. Listener para el BOTÓN DE RESTABLECER CONTRASEÑA
-        btnResetPassword.setOnClickListener {
-            attemptPasswordReset()
-        }
-
-        // 3. Listener para el ENLACE "VOLVER A LOGIN"
-        tvBackToLogin.setOnClickListener {
-            navigateToLogin()
-        }
+        initializeViews()
+        setupListeners()
     }
 
-    /**
-     * Valida las contraseñas y envía la solicitud de cambio al servidor.
-     */
-    private fun attemptPasswordReset() {
-        val username = etForgotUsername.text.toString().trim()
-        val newPass = etNewPassword.text.toString()
-        val confirmPass = etConfirmNewPassword.text.toString()
+    private fun initializeViews() {
+        etForgotEmail = findViewById(R.id.et_forgotUsername)
+        btnVerify = findViewById(R.id.btnResetPassword)
+        tvStatusMessage = findViewById(R.id.tv_status_message)
+        tvBackToLogin = findViewById(R.id.tv_backToLogin)
+    }
 
-        // 1. Validación de campos vacíos
-        if (username.isBlank() || newPass.isBlank() || confirmPass.isBlank()) {
-            showErrorMessage("Por favor, completa todos los campos.")
-            return
-        }
+    private fun setupListeners() {
 
-        // 2. Validación: Las contraseñas deben coincidir
-        if (newPass != confirmPass) {
-            showErrorMessage("Las nuevas contraseñas no coinciden.")
-            etConfirmNewPassword.setText("") // Limpiar el campo de confirmación
-            return
-        }
+        // Clic en el texto de abajo
+        tvBackToLogin.setOnClickListener { finish() }
 
-        // 3. Llamada asíncrona al servidor
-        lifecycleScope.launch {
-            try {
-                // Usamos AuthRequest: Nombre de usuario y la nueva contraseña
-                val request = AuthRequest(username, newPass)
+        // Clic en el botón de verificar
+        btnVerify.setOnClickListener {
+            val email = etForgotEmail.text.toString().trim()
 
-                // Llama al nuevo endpoint /api/reset-password
-                val response = authService.resetPassword(request)
-
-                if (response.success) {
-                    showSuccessMessage("¡Contraseña restablecida con éxito!")
-                    // Navega a Login para que el usuario pueda probar la nueva clave
-                    navigateToLogin()
-                } else {
-                    // Muestra el error del servidor (ej: "Usuario no encontrado")
-                    showErrorMessage("Fallo al restablecer clave: ${response.message}")
-                }
-            } catch (e: Exception) {
-                Log.e("PassResetError", "Error de conexión/API: ${e.message}", e)
-                showErrorMessage("Error de conexión con el servidor. No se pudo cambiar la clave.")
+            if (email.isEmpty()) {
+                showInScreenNotification("Please enter your email address", isSuccess = false)
+            } else {
+                performEmailVerification(email)
             }
         }
     }
 
+    private fun performEmailVerification(email: String) {
+        lifecycleScope.launch {
+            try {
+                // Creamos el objeto JSON que viajará en el Body
+                val request = EmailVerify(Email = email)
+
+                val response = authService.verifyEmail(request)
+
+                if (response.success) {
+                    showInScreenNotification(response.message, true)
+                    btnVerify.isEnabled = false
+                    btnVerify.alpha = 0.5f
+                } else {
+                    showInScreenNotification(response.message, false)
+                }
+            } catch (e: Exception) {
+                showInScreenNotification("Connection Error", false)
+            }
+        }
+    }
     /**
-     * Función privada para manejar la navegación de vuelta a la pantalla principal de Login.
+     * Muestra el mensaje directamente en el layout centrado
      */
-    private fun navigateToLogin() {
-        val intent = Intent(this, MainActivity::class.java)
+    private fun showInScreenNotification(message: String, isSuccess: Boolean) {
+        tvStatusMessage.text = message
+        tvStatusMessage.visibility = View.VISIBLE
 
-        // Limpiamos la pila de actividades
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-
-        startActivity(intent)
-        finish()
-    }
-
-    // --- Funciones de Utilidad ---
-
-    private fun showSuccessMessage(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-        Log.i("PassResetStatus", message)
-    }
-
-    private fun showErrorMessage(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-        Log.e("PassResetStatus", message)
+        if (isSuccess) {
+            // Verde para éxito
+            tvStatusMessage.setTextColor(Color.GREEN)
+        } else {
+            // Rojo para errores
+            tvStatusMessage.setTextColor(Color.RED)
+        }
     }
 }

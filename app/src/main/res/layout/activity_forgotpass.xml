@@ -5,117 +5,104 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_bk"
-    android:focusableInTouchMode="true"
+    android:background="#121212"
+    android:fillViewport="true"
     tools:context=".ForgotpassActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp"
-        android:layout_marginTop="30dp">
+        android:gravity="center"
+        android:padding="24dp">
 
-        <RelativeLayout
+        <TextView
+            android:id="@+id/tv_forgotTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reset Password"
+            android:textColor="#FFFFFF"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:textAlignment="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="32dp"
+            android:text="Enter your email to verify your account"
+            android:textColor="#888888"
+            android:textSize="14sp"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/tv_status_message"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true"
-                android:text="Rebooting Your Brain?"  android:textColor="@color/purple_700"
-                android:textSize="32sp"
-                android:textStyle="bold"
-                />
-
-        </RelativeLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="#2C2C2C"
+            android:padding="12dp"
+            android:textAlignment="center"
+            android:textColor="#BB86FC"
+            android:textSize="14sp"
+            android:visibility="gone" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            app:cardBackgroundColor="@android:color/white"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="5dp">
+            app:cardBackgroundColor="#1E1E1E"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="24dp">
 
                 <EditText
                     android:id="@+id/et_forgotUsername"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:hint="Username" android:inputType="textEmailAddress"
+                    android:hint="Email Address"
+                    android:inputType="textEmailAddress"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#757575"
+                    android:backgroundTint="#BB86FC"
                     android:maxLines="1"
-                    android:padding="12dp"
-                    android:autofillHints="emailAddress"/>
-
-                <EditText
-                    android:id="@+id/et_newPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:hint="New Password " android:maxLines="1"
-                    android:inputType="textPassword"
-                    android:padding="12dp"
-                    android:autofillHints="password" />
-
-                <EditText
-                    android:id="@+id/et_confirmNewPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:hint="Confirm New Password" android:maxLines="1"
-                    android:inputType="textPassword"
-                    android:padding="12dp"
-                    android:autofillHints="password" />
+                    android:minHeight="48dp"
+                    android:importantForAutofill="no" />
 
                 <Button
                     android:id="@+id/btnResetPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Change Password" android:textColor="@android:color/white"
-                    android:backgroundTint="@color/purple_700"
-                    android:layout_gravity="center_horizontal"
                     android:layout_marginTop="24dp"
-                    android:paddingVertical="12dp"/>
-
-                <TextView
-                    android:id="@+id/tv_backToLogin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
+                    android:backgroundTint="#BB86FC"
+                    android:paddingVertical="12dp"
+                    android:text="Verify Email"
+                    android:textColor="#121212"
                     android:textStyle="bold"
-                    android:textColor="@color/purple_700"
-                    android:textSize="17sp"
-                    android:minHeight="48dp"
-                    android:text="Oops, I remembered my key! Back to Login." android:layout_marginTop="16dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_gravity="center_horizontal"
-                    android:clickable="true"
-                    android:focusable="true" />
+                    app:cornerRadius="8dp" />
 
             </LinearLayout>
-
         </androidx.cardview.widget.CardView>
 
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_centerVertical="true"
-    android:layout_centerHorizontal="true"
-    android:layout_marginTop="100dp"
-    android:text="En proceso de desarrollo"  android:textColor="@color/purple_700"
-    android:textSize="32sp"
-    android:textStyle="bold"
-    />
+        <TextView
+            android:id="@+id/tv_backToLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:minHeight="48dp"
+            android:text="Back to Login"
+            android:textColor="#BB86FC"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:background="?attr/selectableItemBackground" />
 
     </LinearLayout>
-
 </ScrollView>
