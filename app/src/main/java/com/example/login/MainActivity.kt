@@ -27,7 +27,6 @@ class MainActivity : ComponentActivity() {
 
     // 2. SERVICIOS
     private val authService = RetrofitClient.authService
-    // Asegúrate de que DroneDataService sea accesible
     private val droneDataService = DroneDataService()
 
     override fun onCreate(savedInstanceState: Bundle?) {
