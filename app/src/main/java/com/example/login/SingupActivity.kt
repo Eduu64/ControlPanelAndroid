@@ -9,16 +9,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.lifecycle.lifecycleScope
-// Importamos el modelo de registro que requiere el email
 import com.example.login.network.RegistrationRequest
 import com.example.login.network.RetrofitClient
 import kotlinx.coroutines.launch
 
 class SingupActivity : ComponentActivity() {
 
-    // Nombres de variables actualizados
     private lateinit var editSingupUsername: EditText
-    private lateinit var editSingupEmail: EditText // <-- ¡NUEVO CAMPO!
+    private lateinit var editSingupEmail: EditText 
     private lateinit var editSingupPassword: EditText
     private lateinit var editSingupConfirmPassword: EditText
     private lateinit var btnRegister: Button
@@ -31,9 +29,7 @@ class SingupActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_singup)
 
-        // Enlazar vistas
         editSingupUsername = findViewById(R.id.editSingupUsername)
-        // 1. Enlazar el nuevo campo Email (debes asegurar que este ID existe en activity_singup.xml)
         editSingupEmail = findViewById(R.id.editSingupEmail)
         editSingupPassword = findViewById(R.id.editSingupPassword)
         editSingupConfirmPassword = findViewById(R.id.editSingupConfirmPassword)
@@ -41,12 +37,10 @@ class SingupActivity : ComponentActivity() {
         btnRegister = findViewById(R.id.btn_register)
         tvLoginLink = findViewById(R.id.tv_login_link)
 
-        // Lógica del Botón de Registro
         btnRegister.setOnClickListener {
             attemptRegister()
         }
 
-        // Lógica de Navegación: De Singup a Login
         tvLoginLink.setOnClickListener {
             navigateToLogin()
         }
@@ -57,12 +51,11 @@ class SingupActivity : ComponentActivity() {
      */
     private fun attemptRegister() {
         val username = editSingupUsername.text.toString().trim()
-        val email = editSingupEmail.text.toString().trim() // <-- ¡OBTENEMOS EL EMAIL!
+        val email = editSingupEmail.text.toString().trim() 
         val password = editSingupPassword.text.toString()
         val confirmPassword = editSingupConfirmPassword.text.toString()
 
         // 1. Validación de Campos Vacíos
-        // Se añade 'email.isBlank()' a la validación
         if (username.isBlank() || email.isBlank() || password.isBlank() || confirmPassword.isBlank()) {
             Toast.makeText(this, "Por favor, completa todos los campos, incluyendo el email.", Toast.LENGTH_SHORT).show()
             return
@@ -78,8 +71,7 @@ class SingupActivity : ComponentActivity() {
         // 3. Envío al Servidor
         lifecycleScope.launch {
             try {
-                // *** ¡CAMBIO CRUCIAL! ***
-                // Usamos RegistrationRequest, que requiere username, email y contrasena
+            
                 val request = RegistrationRequest(
                     nombreUsuario = username,
                     email = email,
@@ -100,8 +92,6 @@ class SingupActivity : ComponentActivity() {
             }
         }
     }
-
-    // --- FUNCIONES DE UTILIDAD (Sin cambios) ---
 
     private fun navigateToLogin() {
         finish()
