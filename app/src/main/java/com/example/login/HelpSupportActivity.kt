@@ -4,7 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
-import android.widget.ImageButton // Importante cambiar a ImageButton
+import android.widget.ImageButton 
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
@@ -12,22 +12,19 @@ import androidx.core.net.toUri
 class HelpSupportActivity : AppCompatActivity() {
 
     private lateinit var btnSupport: Button
-    private lateinit var btnBack: ImageButton // Cambiado de Button a ImageButton
+    private lateinit var btnBack: ImageButton 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_help_support)
 
-        // 1. Inicializar AMBOS botones (Esto faltaba para btnBack)
         btnSupport = findViewById(R.id.btn_contact_support)
         btnBack = findViewById(R.id.btn_back)
 
-        // 2. Configurar el botón de soporte
         btnSupport.setOnClickListener {
             enviarCorreoSoporte()
         }
 
-        // 3. Configurar el botón de volver
         btnBack.setOnClickListener {
             finish()
         }
