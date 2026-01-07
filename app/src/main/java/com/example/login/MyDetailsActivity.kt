@@ -55,7 +55,6 @@ class MyDetailsActivity : AppCompatActivity() {
     }
 
     private fun loadDataFromIntent() {
-        // RECUPERAR EL ID (Si no llega, la API fallará)
         userId = intent.getIntExtra("USER_ID", -1)
 
         val user = intent.getStringExtra("USERNAME") ?: "User"
@@ -92,7 +91,6 @@ class MyDetailsActivity : AppCompatActivity() {
             val currentEmail = etEmail.text.toString().trim()
 
             if (currentEmail.isNotEmpty()) {
-                // Ejecutamos la petición sin cambiar de pantalla
                 performEmailVerification(currentEmail)
             } else {
                 Toast.makeText(this, "Email field is empty", Toast.LENGTH_SHORT).show()
@@ -134,7 +132,6 @@ class MyDetailsActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             try {
-                // El campo "Email" va con mayúscula para coincidir con el @SerializedName
                 val updateData = UserUpdate(nombreUsuario = newUsername, Email = newEmail)
 
                 val response = authService.updateUser(userId, updateData)
@@ -153,7 +150,7 @@ class MyDetailsActivity : AppCompatActivity() {
     }
 
     private fun performEmailVerification(email: String) {
-        // Desactivamos el botón para evitar múltiples clics
+        // Botón desactivado para evitar múltiples clics
         btnChangePassword.isEnabled = false
 
         lifecycleScope.launch {
@@ -162,13 +159,10 @@ class MyDetailsActivity : AppCompatActivity() {
                 val response = authService.verifyEmail(request)
 
                 if (response.success) {
-                    // ÉXITO: El servidor ya envió el correo
                     Toast.makeText(this@MyDetailsActivity,
                         "Reset code sent to: $email",
                         Toast.LENGTH_LONG).show()
 
-                    // Aquí podrías mostrar un AlertDialog para ingresar el código si quisieras,
-                    // pero por ahora cumplimos con hacerlo "in situ".
                 } else {
                     Toast.makeText(this@MyDetailsActivity,
                         "Error: ${response.message}",
@@ -179,7 +173,7 @@ class MyDetailsActivity : AppCompatActivity() {
                     "Connection error. Please try again.",
                     Toast.LENGTH_SHORT).show()
             } finally {
-                // Reactivamos el botón al terminar la petición
+                // Botón reactivado al terminar la petición
                 btnChangePassword.isEnabled = true
             }
         }
