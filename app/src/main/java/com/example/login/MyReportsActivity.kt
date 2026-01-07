@@ -29,7 +29,6 @@ class MyReportsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Recuperar datos antes de cargar la UI
         loadIntentData()
 
         if (userId == -1) {
@@ -51,7 +50,6 @@ class MyReportsActivity : AppCompatActivity() {
     }
 
     private fun loadIntentData() {
-        // Obtenemos el ID del usuario igual que en DutyActivity
         userId = intent.getIntExtra("USER_ID", -1)
     }
 
@@ -60,29 +58,24 @@ class MyReportsActivity : AppCompatActivity() {
         btnBack = findViewById(R.id.btnBack)
         btnRefresh = findViewById(R.id.btnRefresh)
 
-        // Configuración inicial del RecyclerView
         rvDetections.layoutManager = LinearLayoutManager(this)
     }
 
     private fun setupListeners() {
-        // Botón de retroceso
         btnBack.setOnClickListener {
             finish()
         }
 
-        // Botón de refrescar con la lógica de recarga
         btnRefresh.setOnClickListener {
             Toast.makeText(this, "Actualizando reportes...", Toast.LENGTH_SHORT).show()
             loadDetectionData()
         }
     }
 
-    // --- Lógica de Detecciones y RecyclerView ---
 
     private fun loadDetectionData() {
         lifecycleScope.launch {
             try {
-                // Usamos el servicio con el formato de DroneDataService
                 val detections = detectionDataService.loadUserDetections(userId)
                 detectionList = detections
 
@@ -98,7 +91,6 @@ class MyReportsActivity : AppCompatActivity() {
     private fun setupRecyclerView() {
         if (!::detectionAdapter.isInitialized) {
             detectionAdapter = DetectionAdapter(detectionList) { detection ->
-                // Acción al hacer clic en una detección (ej. mostrar detalle)
                 Toast.makeText(this, "Detección: ${detection.clasificacion}", Toast.LENGTH_SHORT).show()
             }
             rvDetections.adapter = detectionAdapter
@@ -106,7 +98,6 @@ class MyReportsActivity : AppCompatActivity() {
             detectionAdapter.updateDetections(detectionList)
         }
 
-        // Mostrar u ocultar según si hay datos
         rvDetections.visibility = if (detectionList.isNotEmpty()) View.VISIBLE else View.GONE
     }
 }
