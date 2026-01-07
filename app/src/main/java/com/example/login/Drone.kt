@@ -13,7 +13,7 @@ data class Drone(
     val id_usuario: Int,
     val estado: String,
 
-    // Usamos Double para que sea compatible con los marcadores del mapa (GeoPoint)
+    // Double para que sea compatible con los marcadores del mapa (GeoPoint)
     val lat: Double?,
     val lon: Double?,
 
@@ -27,7 +27,7 @@ data class Drone(
 
 /**
  * Función de extensión para transformar el modelo de red (DroneDB) en el modelo local (Drone).
- * Esta función es el "puente" que conecta tu base de datos con la aplicación.
+ * Esta función es el "puente" que conecta base de datos con la aplicación.
  */
 fun DroneDB.toLocalDrone(): Drone {
     return Drone(
@@ -38,7 +38,7 @@ fun DroneDB.toLocalDrone(): Drone {
         id_usuario = this.id_usuario,
         estado = this.estado,
 
-        // Mapeamos los nombres en MAYÚSCULAS que vienen de tu base de datos/API
+        // Mapeamos los nombres en MAYÚSCULAS que vienen de base de datos/API
         // Los convertimos a Double para el mapa
         lat = this.LAT?.toDouble(),
         lon = this.LON?.toDouble(),
