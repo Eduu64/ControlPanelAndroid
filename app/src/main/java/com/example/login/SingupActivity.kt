@@ -1,6 +1,5 @@
 package com.example.login
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -16,7 +15,7 @@ import kotlinx.coroutines.launch
 class SingupActivity : ComponentActivity() {
 
     private lateinit var editSingupUsername: EditText
-    private lateinit var editSingupEmail: EditText 
+    private lateinit var editSingupEmail: EditText
     private lateinit var editSingupPassword: EditText
     private lateinit var editSingupConfirmPassword: EditText
     private lateinit var btnRegister: Button
@@ -29,6 +28,7 @@ class SingupActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_singup)
 
+        // Inicialización de vistas
         editSingupUsername = findViewById(R.id.editSingupUsername)
         editSingupEmail = findViewById(R.id.editSingupEmail)
         editSingupPassword = findViewById(R.id.editSingupPassword)
@@ -51,13 +51,13 @@ class SingupActivity : ComponentActivity() {
      */
     private fun attemptRegister() {
         val username = editSingupUsername.text.toString().trim()
-        val email = editSingupEmail.text.toString().trim() 
+        val email = editSingupEmail.text.toString().trim()
         val password = editSingupPassword.text.toString()
         val confirmPassword = editSingupConfirmPassword.text.toString()
 
         // 1. Validación de Campos Vacíos
         if (username.isBlank() || email.isBlank() || password.isBlank() || confirmPassword.isBlank()) {
-            Toast.makeText(this, "Por favor, completa todos los campos, incluyendo el email.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Por favor, completa todos los campos.", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -71,30 +71,32 @@ class SingupActivity : ComponentActivity() {
         // 3. Envío al Servidor
         lifecycleScope.launch {
             try {
-            
+                // IMPORTANTE: 'Email' con E mayúscula para coincidir con el modelo de red
                 val request = RegistrationRequest(
                     nombreUsuario = username,
-                    email = email,
+                    Email = email,
                     contrasena = password
                 )
 
                 val response = authService.registerUser(request)
 
                 if (response.success) {
-                    showSuccessMessage("¡Registro exitoso! Ya puedes iniciar sesión.")
+                    // El servidor ahora envía el ID, así que lo mostramos o guardamos
+                    showSuccessMessage("¡Registro exitoso!")
                     navigateToLogin()
                 } else {
                     showErrorMessage("Fallo en el registro: ${response.message}")
                 }
             } catch (e: Exception) {
-                Log.e("AuthRegister", "Error de conexión/API: ${e.message}", e)
-                showErrorMessage("Error de conexión con el servidor.")
+                // Logueamos el error completo para debug
+                Log.e("AuthRegister", "Error detallado: ${e.message}", e)
+                showErrorMessage("Error de conexión: Revisa el servidor o internet.")
             }
         }
     }
 
     private fun navigateToLogin() {
-        finish()
+        finish() // Cierra esta actividad y regresa a la anterior (Login)
     }
 
     private fun showSuccessMessage(message: String) {

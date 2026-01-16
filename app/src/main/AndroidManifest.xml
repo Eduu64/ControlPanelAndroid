@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,7 +15,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Login"
-
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
@@ -50,32 +50,30 @@
         <activity
             android:name=".AccountActivity"
             android:exported="false"
-            android:label="Account">
+            android:label="Account"
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
         </activity>
 
         <activity
             android:name=".MyDetailsActivity"
             android:exported="false"
-            android:label="DetailsActivity">
+            android:label="DetailsActivity"
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
         </activity>
 
         <activity
             android:name=".HelpSupportActivity"
             android:exported="false"
-            android:label="DetailsActivity">
+            android:label="Help &amp; Support"
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
         </activity>
 
         <activity
             android:name=".MyReportsActivity"
             android:exported="false"
-            android:label="ReportsActivity">
+            android:label="ReportsActivity"
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
         </activity>
 
-
     </application>
-
 </manifest>

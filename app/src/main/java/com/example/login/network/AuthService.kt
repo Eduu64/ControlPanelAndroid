@@ -34,7 +34,7 @@ data class EmailVerifyResponse(
 /** Modelo ESPECÍFICO para el REGISTRO (requiere email). */
 data class RegistrationRequest(
     val nombreUsuario: String,
-    val email: String,
+    val Email: String,
     val contrasena: String
 )
 data class UserUpdate(
